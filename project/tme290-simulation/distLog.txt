@@ -1,0 +1,55 @@
+Starting tme290simulation_sim-motor-kiwi_1
+Starting tme290simulation_ui-default_1
+Starting tme290simulation_logic-test-kiwi_1
+Starting tme290simulation_sim-adc-bbblue-left_1
+Starting tme290simulation_sim-ultrasonic-srf08-front_1
+Starting tme290simulation_sim-adc-bbblue-right_1
+Starting tme290simulation_sim-global_1
+Starting tme290simulation_sim-ultrasonic-srf08-rear_1
+Attaching to tme290simulation_sim-motor-kiwi_1, tme290simulation_logic-test-kiwi_1, tme290simulation_sim-ultrasonic-srf08-rear_1, tme290simulation_sim-ultrasonic-srf08-front_1, tme290simulation_sim-adc-bbblue-left_1, tme290simulation_sim-adc-bbblue-right_1, tme290simulation_ui-default_1, tme290simulation_sim-global_1
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[36;1mui-default_1                  |[0m [2018/04/30 12:41:11:9791] NOTICE: libuv support not compiled in
+[36;1mui-default_1                  |[0m [2018/04/30 12:41:11:9955] NOTICE: Creating Vhost 'default' port 8000, 2 protocols, IPv6 off
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+[33mlogic-test-kiwi_1             |[0m dist 0
+[33mlogic-test-kiwi_1             |[0m diff 0
+Stopping tme290simulation_logic-test-kiwi_1 ... 
+Stopping tme290simulation_sim-adc-bbblue-right_1 ... 
+Stopping tme290simulation_sim-ultrasonic-srf08-front_1 ... 
+Stopping tme290simulation_sim-ultrasonic-srf08-rear_1 ... 
+Stopping tme290simulation_sim-adc-bbblue-left_1 ... 
+Stopping tme290simulation_sim-motor-kiwi_1 ... 
+Stopping tme290simulation_ui-default_1 ... 
+Stopping tme290simulation_sim-global_1 ... 
+Killing tme290simulation_logic-test-kiwi_1 ... 
+Killing tme290simulation_sim-adc-bbblue-right_1 ... 
+Killing tme290simulation_sim-ultrasonic-srf08-front_1 ... 
+Killing tme290simulation_sim-ultrasonic-srf08-rear_1 ... 
+Killing tme290simulation_sim-adc-bbblue-left_1 ... 
+Killing tme290simulation_sim-motor-kiwi_1 ... 
+Killing tme290simulation_ui-default_1 ... 
+Killing tme290simulation_sim-global_1 ... 
+Aborting.
+Gracefully stopping... (press Ctrl+C again to force)
