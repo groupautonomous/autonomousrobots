@@ -32,7 +32,8 @@ Behavior::Behavior() noexcept:
   m_rightIrReadingMutex{},
   m_groundSteeringAngleRequestMutex{},
   m_pedalPositionRequestMutex{},
-  m_rightDistancePrev{}
+  m_rightDistancePrev{},
+  m_frontDistancePrev{}
 {
 }
 
@@ -95,24 +96,37 @@ void Behavior::step() noexcept
   //float rearDistance = rearUltrasonicReading.distance();
   //double leftDistance = convertIrVoltageToDistance(leftIrReading.voltage());
   double rightDistance = convertIrVoltageToDistance(rightIrReading.voltage());
-
+  double frontDistanceDiff = m_frontDistancePrev -frontDistance;
   double rightDistanceDiff = m_rightDistancePrev - rightDistance;
   m_rightDistancePrev = rightDistance;
-
+  m_frontDistancePrev = frontDistance;
   float pedalPosition = 0.5f;
   float groundSteeringAngle = 0.0f;
 
-  if(frontDistance <= 0.6f || rightDistanceDiff > 0)
-  {
+  if(frontDistance <= 0.6f || rightDistanceDiff >0)
+  { if(frontDistance <=0.4f)
+    {  pedalPosition = 0.1f;
+      groundSteeringAngle = 1.2f;
+    }
+    else
+    {
+    pedalPosition = 0.3f;
+    groundSteeringAngle = 0.6f;
+    }
+
+  }
+  /*else if(frontDistanceDiff > 0 && rightDistanceDiff > 0)
+  { m_frontDistancePrev =0;
     pedalPosition = 0.1f;
     groundSteeringAngle = 0.6f;
-  }
-  /*else if(rightDistanceDiff < 0 && rightDistance > 0.2)
+  }*/
+
+  else if(rightDistanceDiff < 0 && rightDistance > 0.1f)
   {
     m_rightDistancePrev = 0;
-    pedalPosition = 0.2f;
-    groundSteeringAngle = -0.3f;
-  }*/
+    pedalPosition = 0.1f;
+    groundSteeringAngle = -1;
+  }
   else
   {
     pedalPosition = 0.4f;
@@ -121,8 +135,8 @@ void Behavior::step() noexcept
 
   std::cout << "dist " << rightDistance << std::endl;
   std::cout << "diff " << rightDistanceDiff << std::endl;
-
-
+  std::cout << "fdist " << frontDistance << std::endl;
+  std::cout << "fdiff " << frontDistanceDiff << std::endl;
 
 
   /*
@@ -164,19 +178,8 @@ double Behavior::convertIrVoltageToDistance(float voltage) const noexcept
 {
   double voltageDividerR1 = 1000.0;
   double voltageDividerR2 = 1000.0;
-  double distance = 0;
 
   double sensorVoltage = (voltageDividerR1 + voltageDividerR2) / voltageDividerR2 * voltage;
-  if(sensorVoltage<=3 && sensorVoltage>=0.2857)
-  {
-    distance = (3.592588839992938*pow(sensorVoltage,4)) \
-      - (28.652472090828870*pow(sensorVoltage,3)) + (83.764336344730470*pow(sensorVoltage,2)) \
-      - (110.5538477414283*sensorVoltage) + 64.357873514438880;
-  }
-  else
-  {
-    distance = 0;
-  }
-
+  double distance = (0.0359*pow(sensorVoltage,4))-(0.2865*pow(sensorVoltage,3))+(0.83788*pow(sensorVoltage,2))-(1.1055*sensorVoltage)+(0.6436);
   return distance;
 }

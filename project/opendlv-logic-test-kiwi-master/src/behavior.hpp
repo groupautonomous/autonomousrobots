@@ -59,6 +59,7 @@ class Behavior {
   std::mutex m_groundSteeringAngleRequestMutex;
   std::mutex m_pedalPositionRequestMutex;
   double m_rightDistancePrev;
+  double m_frontDistancePrev;
 };
 
 #endif
