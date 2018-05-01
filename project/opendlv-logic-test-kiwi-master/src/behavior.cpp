@@ -104,7 +104,7 @@ void Behavior::step() noexcept
   float groundSteeringAngle = 0.0f;
 
   if(frontDistance <= 0.6f || rightDistanceDiff >0)
-  { if(frontDistance <=0.4f)
+  { if(frontDistance <=0.3f)
     {  pedalPosition = 0.1f;
       groundSteeringAngle = 1.2f;
     }
