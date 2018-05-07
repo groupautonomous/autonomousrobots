@@ -32,7 +32,7 @@ Behavior::Behavior() noexcept:
   m_rightIrReadingMutex{},
   m_groundSteeringAngleRequestMutex{},
   m_pedalPositionRequestMutex{},
-  m_rightDistancePrev{},
+  m_rightDistancePrev{0.6436},
   m_frontDistancePrev{}
 {
 }
@@ -94,73 +94,45 @@ void Behavior::step() noexcept
 
   float frontDistance = frontUltrasonicReading.distance();
   //float rearDistance = rearUltrasonicReading.distance();
-  //double leftDistance = convertIrVoltageToDistance(leftIrReading.voltage());
+  double leftDistance = convertIrVoltageToDistance(leftIrReading.voltage());
   double rightDistance = convertIrVoltageToDistance(rightIrReading.voltage());
   //double frontDistanceDiff = m_frontDistancePrev -frontDistance;
-  double rightDistanceDiff = m_rightDistancePrev - rightDistance;
+  double rightDistanceDiff = rightDistance - m_rightDistancePrev;
   m_rightDistancePrev = rightDistance;
-  //m_frontDistancePrev = frontDistance;
   float pedalPosition = 0.05f;
-  float groundSteeringAngle = 0.0f;
-
-  if(frontDistance <= 0.3f || rightDistanceDiff >0)
-  {
-    /*if(frontDistance <=0.3f)
-      {  pedalPosition = 0.1f;
-        groundSteeringAngle = 1.2f;
-      }
-    else*/
-    {
-    pedalPosition = 0.03f;
-    groundSteeringAngle = 0.6f;
-    }
-
-  }
-
-  /*else if(frontDistanceDiff > 0 && rightDistanceDiff > 0)
-  { m_frontDistancePrev =0;
+  float groundSteeringAngle = 0.0;
+  float threshold =0.15f;
+  if(rightDistanceDiff >0.3f)
+   {m_rightDistancePrev=0;
     pedalPosition = 0.1f;
-    groundSteeringAngle = 0.6f;
-  }*/
-
-  else if(rightDistanceDiff < 0 && rightDistance > 0.2f)
+    groundSteeringAngle = -0.5f;
+  }
+  if(frontDistance >= 0.7f && rightDistance >=threshold && leftDistance >=threshold)
   {
-    m_rightDistancePrev = 0;
-    pedalPosition = 0.01f;
-    groundSteeringAngle = -1;
-  }
-  else
-  {
-    pedalPosition = 0.04f;
-    groundSteeringAngle = 0;
-  }
-
-  std::cout << "dist " << rightDistance << std::endl;
-  std::cout << "diff " << rightDistanceDiff << std::endl;
-  std::cout << "fdist " << frontDistance << std::endl;
-  std::cout << "fdiff " << frontDistanceDiff << std::endl;
-
-
-  /*
-  if (frontDistance < 0.3f) {
-    pedalPosition = 0.0f;
-  } else {
-    if (rearDistance < 0.3f) {
-      pedalPosition = 0.4f;
+   if((rightDistance >threshold && rightDistance <(threshold+0.03f) ))
+    {    pedalPosition = 0.1f;
+      groundSteeringAngle = -0.5f;
     }
-  }
 
-  if (leftDistance < rightDistance) {
-    if (leftDistance < 0.2f) {
-      groundSteeringAngle = 0.2f;
-    }
-  } else {
-    if (rightDistance < 0.2f) {
-      groundSteeringAngle = 0.2f;
-    }
-  }
-  */
+    else if(rightDistanceDiff > threshold && rightDistance>threshold)
+   {
+    m_rightDistancePrev=0;
+    pedalPosition = 0.1f;
+    groundSteeringAngle = -0.5f;
+   }
+    else
 
+    {pedalPosition = 0.1f;
+     groundSteeringAngle = 0;
+    }
+   }
+   else if(frontDistance <=0.7f || rightDistance <threshold)
+   { pedalPosition = 0.1f;
+     groundSteeringAngle = 0.5f;
+    }
+
+
+    std::cout<<"distance"<<rightDistanceDiff<<std::endl;
   {
     std::lock_guard<std::mutex> lock1(m_groundSteeringAngleRequestMutex);
     std::lock_guard<std::mutex> lock2(m_pedalPositionRequestMutex);
